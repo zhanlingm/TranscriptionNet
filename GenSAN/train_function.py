@@ -107,7 +107,6 @@ def test_evaluate(test_model, pre_gecs_test, gecs_test):
     # feature_test_predict_df = pd.DataFrame(feature_test_predict, index=net_test.index)
     # feature_test_predict_df.to_csv(save_path + "feature_test_predict.csv", index=True)
 
-    # 计算Pearson相关性
     pcc = []
     for i in range(feature_test_predict.shape[0]):
         pearson = np.corrcoef(feature_test_predict[i], gecs_test[i])[0, 1]
@@ -115,10 +114,8 @@ def test_evaluate(test_model, pre_gecs_test, gecs_test):
     abs_pcc = abs(np.array(pcc))
     abs_pcc_mean = abs_pcc.mean()
 
-    # 计算均方误差
     mse = mean_squared_error(gecs_test, feature_test_predict)
 
-    # 计算ks_test
     gecs_test_flaten = np.ravel(gecs_test)
     feature_test_predict_flaten = np.ravel(feature_test_predict)
     d, p_value = stats.ks_2samp(gecs_test_flaten, feature_test_predict_flaten)
@@ -149,7 +146,7 @@ def plot_loss_figure(epochs, train_loss, valid_loss):
     plt.rcParams['axes.unicode_minus'] = False
     plt.figure(figsize=(7, 7), dpi=144)
 
-    plt.title('FunDNN loss figures')
+    plt.title('Loss figure')
     plt.plot(range(epochs), train_loss, color='red', linestyle='--', label='train loss', linewidth=2)
     plt.plot(range(epochs), valid_loss, color='dodgerblue', linestyle='-', label='valid loss', linewidth=2)
     plt.legend(loc='upper right', frameon=False)
